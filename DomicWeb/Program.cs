@@ -1,7 +1,7 @@
 ﻿using DomicWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyWeb
+namespace DomicWeb
 {
     public class Program
     {
