@@ -3,22 +3,23 @@ using DomicWeb.DataAccess.Repository.IRepository;
 using DomicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DomicWeb.Controllers
+namespace DomicWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork; 
-        public CategoryController(IUnitOfWork unitOfWork) 
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList(); 
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
-        public IActionResult Create() 
+        public IActionResult Create()
         {
             return View();
         }
@@ -28,24 +29,24 @@ namespace DomicWeb.Controllers
         {
             if (obj.Name == obj.DisplayOrder.ToString())
             {
-                ModelState.AddModelError("name", "Display Order cannot exactly match the Name"); 
+                ModelState.AddModelError("name", "Display Order cannot exactly match the Name");
             }
 
-            if (ModelState.IsValid) 
-                                    
+            if (ModelState.IsValid)
+
             {
                 _unitOfWork.Category.Add(obj);
                 _unitOfWork.Save();
-                TempData["success"]= "Category created successfully";
+                TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
 
             return View();
-                          
+
         }
         public IActionResult Edit(int? id)
         {
-            if (id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -67,7 +68,7 @@ namespace DomicWeb.Controllers
             {
                 _unitOfWork.Category.Update(obj);
                 _unitOfWork.Save();
-                TempData["success"]= "Category updated successfully";
+                TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
 
@@ -76,7 +77,7 @@ namespace DomicWeb.Controllers
         }
         public IActionResult Delete(int? id)
         {
-            if (id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -98,7 +99,7 @@ namespace DomicWeb.Controllers
             }
             _unitOfWork.Category.Remove(obj);
             _unitOfWork.Save();
-            TempData["success"]= "Category deleted successfully";
+            TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
 
