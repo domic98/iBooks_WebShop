@@ -2,6 +2,7 @@
 using DomicWeb.DataAccess.Repository.IRepository;
 using DomicWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DomicWeb.Areas.Admin.Controllers
 {
@@ -16,6 +17,13 @@ namespace DomicWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category
+                .GetAll().Select(u=> new SelectListItem
+                {
+                     Text = u.Name,
+                     Value = u.Id.ToString()
+
+                });
             return View(objProductList);
         }
 
