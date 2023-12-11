@@ -1,7 +1,8 @@
-﻿using DomicWeb.DataAccess.Data;
+using DomicWeb.DataAccess.Data;
 using DomicWeb.DataAccess.Repository;
 using DomicWeb.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace DomicWeb
 {
@@ -17,6 +18,8 @@ namespace DomicWeb
             builder.Services.AddDbContext<ApplicationDbContext>(options=>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddRazorPages();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -36,7 +39,9 @@ namespace DomicWeb
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.MapRazorPages();   
 
             app.MapControllerRoute(
                 name: "default",
