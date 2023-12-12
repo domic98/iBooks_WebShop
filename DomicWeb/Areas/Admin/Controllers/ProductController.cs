@@ -2,12 +2,15 @@
 using DomicWeb.DataAccess.Repository.IRepository;
 using DomicWeb.Models;
 using DomicWeb.Models.ViewModels;
+using DomicWeb.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DomicWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
