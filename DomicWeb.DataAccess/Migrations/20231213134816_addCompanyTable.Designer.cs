@@ -4,6 +4,7 @@ using DomicWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DomicWeb.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231213134816_addCompanyTable")]
+    partial class addCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,38 +96,6 @@ namespace DomicWeb.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "TechCity",
-                            Name = "Tech Solution",
-                            PhoneNumber = "039485475",
-                            PostalCode = "456",
-                            State = "IL",
-                            StreetAddress = "123 Tech Street"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "BooksCity",
-                            Name = "DomiBooksShop",
-                            PhoneNumber = "3045967723",
-                            PostalCode = "789",
-                            State = "BS",
-                            StreetAddress = "321 Books Street"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "PapersCity",
-                            Name = "EfficientPaper",
-                            PhoneNumber = "6858437395",
-                            PostalCode = "234",
-                            State = "EP",
-                            StreetAddress = "789 Paper Street"
-                        });
                 });
 
             modelBuilder.Entity("DomicWeb.Models.Product", b =>
