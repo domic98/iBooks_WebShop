@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DomicWeb.DataAccess.Repository.IRepository
 {
-    public interface IShoppingCartRepository : IRepository<ShoppingCart>
+    public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
-        void Update(ShoppingCart obj);
+       
         
     }
 }
