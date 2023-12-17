@@ -2,6 +2,48 @@
 for details on configuring this project to bundle and minify static web assets. */
 @import url("https://fonts.googleapis.com/css2?family=Neucha&display=swap");
 
+
+footer {
+    border-top: 1px solid #fff; 
+    
+    color: #fff; 
+    text-align: center;
+    padding:5px;
+    margin-top: 20px; 
+    line-height: 20px; !important
+}
+
+#footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 20px;
+}
+
+#copyright {
+    flex-grow: 1; 
+}
+
+#social-icons {
+    display: flex;
+    gap: 5cm;
+    
+}
+.gap-2 {
+    gap: 1rem !important;
+}
+
+.social-icon img {
+    width: 70px;
+    height: 70px;
+    filter: brightness(0) invert(1);
+}
+
+.social-icon img,
+.social-icon i {
+    color: #ffffff !important; 
+}
+
 svg {
     font-family: "Neucha", sans-serif;
     width: 100%;

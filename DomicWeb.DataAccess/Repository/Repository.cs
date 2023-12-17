@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DomicWeb.DataAccess.Data;
 using DomicWeb.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DomicWeb.DataAccess.Repository
 {
@@ -22,8 +23,8 @@ namespace DomicWeb.DataAccess.Repository
             this.dbSet = _db.Set<T>();
             // _db.Categories == dbSet
             _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
-          
-            
+
+
         }
 
         public void Add(T entity)
@@ -31,9 +32,21 @@ namespace DomicWeb.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+
+            if (tracked)
+            {
+                query = dbSet;
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+            }
+
+
+
             query = query.Where(filter);
             if (!string.IsNullOrEmpty(includeProperties))
             {
@@ -44,6 +57,7 @@ namespace DomicWeb.DataAccess.Repository
                 }
             }
             return query.FirstOrDefault();
+
         }
 
         // Category, CoverType
@@ -52,9 +66,9 @@ namespace DomicWeb.DataAccess.Repository
             IQueryable<T> query = dbSet;
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach(var includeProp in includeProperties
-                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) 
-                { 
+                foreach (var includeProp in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
                     query = query.Include(includeProp);
                 }
             }
