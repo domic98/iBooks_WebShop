@@ -32,7 +32,7 @@ namespace DomicWeb.Utility
 
         public const string PaymentStatusPending = "Pending";
 
-        public const string PaymentStatus = "Approved";
+        public const string PaymentStatusApproved = "Approved";
 
         public const string PaymentStatusDelayedPayment = "ApprovedForDelayedPayment";
 
