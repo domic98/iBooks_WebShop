@@ -30,6 +30,21 @@ namespace DomicWeb
                 options.LogoutPath = $"/Identity/Account/Logout";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
+
+            builder.Services.AddAuthentication().AddFacebook(option =>
+            {
+                option.AppId = "1342643959727710";
+                option.AppSecret = "603fd4b772c3279957774aa5a907ff40";
+            });
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(100);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -52,6 +67,9 @@ namespace DomicWeb
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
+
             app.MapRazorPages();   
 
             app.MapControllerRoute(
