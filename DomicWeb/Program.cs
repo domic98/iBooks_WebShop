@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using DomicWeb.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
+using DomicWeb.DataAccess.DbInitializer;
 
 namespace DomicWeb
 {
@@ -45,6 +46,7 @@ namespace DomicWeb
                 options.Cookie.IsEssential = true;
             });
 
+            builder.Services.AddScoped<DbInitializer, DbInitializer>();
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -69,6 +71,8 @@ namespace DomicWeb
             app.UseAuthorization();
 
             app.UseSession();
+            
+            SeedDatabase();
 
             app.MapRazorPages();   
 
@@ -77,6 +81,15 @@ namespace DomicWeb
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+
+            void SeedDatabase()
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+                    dbInitializer.Initialize();
+                }
+            }
         }
     }
 }
