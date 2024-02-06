@@ -34,8 +34,8 @@ namespace DomicWeb
 
             builder.Services.AddAuthentication().AddFacebook(option =>
             {
-                option.AppId = "1342643959727710";
-                option.AppSecret = "603fd4b772c3279957774aa5a907ff40";
+                option.AppId = "000";
+                option.AppSecret = "000";
             });
 
             builder.Services.AddDistributedMemoryCache();
